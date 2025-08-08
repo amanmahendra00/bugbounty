@@ -18,6 +18,7 @@ class PipelineRunner:
             "historical_urls": self.step_historical_urls,
             "crawl": self.step_crawl,
             "probe_basic": self.step_probe_basic,
+            "probe_xss_advanced": self.step_probe_xss_advanced,
             "report": self.step_report,
             "notify": self.step_notify,
         }
@@ -64,6 +65,14 @@ class PipelineRunner:
         from agent.probers.basic import run_basic_probes
 
         findings = run_basic_probes(self.context)
+        for f in findings:
+            self.context.add_finding(f)
+            self._notify_finding(f)
+
+    def step_probe_xss_advanced(self) -> None:
+        from agent.probers.xss_advanced import run_advanced_xss
+
+        findings = run_advanced_xss(self.context)
         for f in findings:
             self.context.add_finding(f)
             self._notify_finding(f)
