@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Agent Report</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    .sev-info { color: #64748b }
+    .sev-low { color: #0ea5e9 }
+    .sev-medium { color: #f59e0b }
+    .sev-high { color: #ef4444 }
+    .sev-critical { color: #dc2626; font-weight: 700 }
+  </style>
+</head>
+<body>
+  <h1>Scan Report</h1>
+  <p>Domains: {{ ', '.join(context.domains) }}</p>
+  <h2>Assets</h2>
+  {% for domain, subs in context.assets.items() %}
+    <h3>{{ domain }}</h3>
+    <ul>
+      {% for s in subs %}
+        <li>{{ s }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+  <h2>Findings ({{ context.findings | length }})</h2>
+  <ul>
+  {% for f in context.findings %}
+    <li class="sev-{{ f.severity }}">{{ f.severity | upper }} - {{ f.title }} — <a href="{{ f.url }}">{{ f.url }}</a></li>
+  {% endfor %}
+  </ul>
+</body>
+</html>

@@ -1,0 +1,10 @@
+[project]
+name = "ai-security-agent-mvp"
+version = "0.1.0"
+description = "Advanced AI Security Agent (MVP)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "."}
